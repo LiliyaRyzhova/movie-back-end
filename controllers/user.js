@@ -35,8 +35,8 @@ module.exports.createUser = (req, res, next) => {
 };
 
 module.exports.getUser = (req, res, next) => {
-  User.find({})
-    .then((users) => res.status(200).send(users))
+  User.findById(req.user._id)
+    .then((user) => res.status(200).send(user))
     .catch(next);
 };
 
@@ -46,7 +46,7 @@ module.exports.getCurrentUser = (req, res, next) => {
       if (!user) {
         throw new ValidationError('Пользователь по указанному _id не найден.');
       } else {
-        res.status(200).send({ data: user });
+        res.status(200).send(user);
       }
     })
     .catch((err) => {
@@ -85,7 +85,7 @@ module.exports.checkToken = (req, res, next) => {
       if (!user) {
         throw new ValidationError('Пользователь по указанному _id не найден.');
       } else {
-        res.status(200).send({ data: user });
+        res.status(200).send(user);
       }
     })
     .catch((err) => {
